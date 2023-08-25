@@ -5,7 +5,7 @@ import http.client
 backend_servers = [
     ("localhost", 5001),
     ("localhost", 5002),
-    ("localhost", 7217),
+    ("localhost", 5003)
     # Add more backend servers as needed
 ]
 
@@ -17,23 +17,24 @@ class LoadBalancerHandler(http.server.BaseHTTPRequestHandler):
         # Get the next backend server in a round-robin fashion
         backend_server = backend_servers[current_server]
         current_server = (current_server + 1) % len(backend_servers)
+        #print("----Selected server--->"+ current_server)
 
         try:
             # Create a connection to the backend server
+            print("-------Creating Connection--------------")
             conn = http.client.HTTPConnection(backend_server[0], backend_server[1])
+            print("--------Creating Request-------------")
+            #print(self.path, "---#---", self.rfile);
             conn.request("GET", self.path, headers=dict(self.headers))
+            print("-------Getting Response--------------")
             response = conn.getresponse()
-
+            print("-------Got Response--------------")
             # Send the backend server's response back to the client
-            print("-----Respons returned from remote server")
             self.send_response(response.status)
-            print("-----Responding from load balancer")
-            res = response.read()
-            print(res)
             for header, value in response.getheaders():
                 self.send_header(header, value)
             self.end_headers()
-            self.wfile.write("Success")
+            self.wfile.write(response.read())
         except Exception as e:
             # Handle exceptions (e.g., if a backend server is down)
             self.send_error(500, str(e))
