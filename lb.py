@@ -1,5 +1,7 @@
 import http.server
 import http.client
+import socketserver
+import threading
 
 # List of backend server addresses and ports
 backend_servers = [
@@ -38,10 +40,11 @@ class LoadBalancerHandler(http.server.BaseHTTPRequestHandler):
         except Exception as e:
             # Handle exceptions (e.g., if a backend server is down)
             self.send_error(500, str(e))
-
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    pass
 if __name__ == '__main__':
     # Start the load balancer server
     server_address = ('localhost', 8080)
-    httpd = http.server.HTTPServer(server_address, LoadBalancerHandler)
+    httpd = ThreadingHTTPServer(server_address, LoadBalancerHandler)
     print('Load balancer listening on port 8080...')
     httpd.serve_forever()
