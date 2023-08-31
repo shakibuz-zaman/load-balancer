@@ -1,0 +1,5 @@
+[
+    "curl -X 'GET' 'http://localhost:7217/api/Entity/Get?cnt=50' -H 'accept: */*'",
+    "curl -X 'POST' 'http://localhost:7217/api/Io/PostTest' -H 'accept: */*' -H 'Content-Type: application/json' -d '{ 'id': 'string', 'name': 'string', 'readCnt': 20, 'writeCnt': 30}'",
+    "curl -X 'POST' 'http://localhost:7217/api/Io/Post' -H 'accept: */*' -H 'Content-Type: application/json' -d '{ "id": "string","name": "string","readCnt": 20,"writeCnt": 30}'"
+]

@@ -18,6 +18,7 @@ class LoadBalancerHandler(http.server.BaseHTTPRequestHandler):
         global current_server
         # Get the next backend server in a round-robin fashion
         backend_server = backend_servers[current_server]
+        executing_server = current_server
         current_server = (current_server + 1) % len(backend_servers)
         #print("----Selected server--->"+ current_server)
 
