@@ -5,9 +5,7 @@ import threading
 
 # List of backend server addresses and ports
 backend_servers = [
-    ("localhost", 5001),
-    ("localhost", 5002),
-    ("localhost", 5003)
+    ("13.127.224.112", 5001)
     # Add more backend servers as needed
 ]
 
