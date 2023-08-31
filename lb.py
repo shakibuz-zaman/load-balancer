@@ -44,7 +44,7 @@ class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
     pass
 if __name__ == '__main__':
     # Start the load balancer server
-    server_address = ('13.232.255.34', 8080)
+    server_address = ('0.0.0.0', 8080)
     httpd = ThreadingHTTPServer(server_address, LoadBalancerHandler)
     print('Load balancer listening on port 8080...')
     httpd.serve_forever()
