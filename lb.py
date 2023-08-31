@@ -13,10 +13,11 @@ current_server = 0
 
 class LoadBalancerHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
+        print("----Serving request")
         global current_server
         # Get the next backend server in a round-robin fashion
         backend_server = backend_servers[current_server]
-        executing_server = current_server
+        #executing_server = current_server
         current_server = (current_server + 1) % len(backend_servers)
         #print("----Selected server--->"+ current_server)
 
@@ -43,7 +44,7 @@ class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
     pass
 if __name__ == '__main__':
     # Start the load balancer server
-    server_address = ('0.0.0.0', 8080)
+    server_address = ('13.232.255.34', 8080)
     httpd = ThreadingHTTPServer(server_address, LoadBalancerHandler)
     print('Load balancer listening on port 8080...')
     httpd.serve_forever()
