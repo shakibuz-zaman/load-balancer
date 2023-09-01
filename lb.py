@@ -2,6 +2,8 @@ import http.server
 import http.client
 import socketserver
 import threading
+import time
+
 
 # List of backend server addresses and ports
 backend_servers = [
@@ -27,9 +29,13 @@ class LoadBalancerHandler(http.server.BaseHTTPRequestHandler):
             conn = http.client.HTTPConnection(backend_server[0], backend_server[1])
             print("--------Creating Request-------------")
             #print(self.path, "---#---", self.rfile);
+            start_time = time.time()
             conn.request("GET", self.path, headers=dict(self.headers))
             print("-------Getting Response--------------")
             response = conn.getresponse()
+            end_time = time.time()
+            et = end_time-start_time
+            print(et)
             print("-------Got Response--------------")
             # Send the backend server's response back to the client
             self.send_response(response.status)
