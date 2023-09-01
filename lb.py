@@ -5,7 +5,7 @@ import threading
 
 # List of backend server addresses and ports
 backend_servers = [
-    ("13.127.224.112", 5001)
+    ("localhost", 5001)
     # Add more backend servers as needed
 ]
 
@@ -44,7 +44,7 @@ class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
     pass
 if __name__ == '__main__':
     # Start the load balancer server
-    server_address = ('0.0.0.0', 8080)
+    server_address = ('localhost', 8080)
     httpd = ThreadingHTTPServer(server_address, LoadBalancerHandler)
     print('Load balancer listening on port 8080...')
     httpd.serve_forever()
